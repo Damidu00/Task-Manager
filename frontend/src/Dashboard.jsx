@@ -2,20 +2,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
+import { FaTrash } from "react-icons/fa";
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = () => {
+    setLoading(true);
     axios.get("http://localhost:5000/api/task/")
       .then(res => {
-        // Filter only completed tasks
         setTasks(res.data.filter(task => task.status === "completed"));
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  };
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:5000/api/task/${id}`)
+      .then(() => fetchTasks());
+  };
 
   return (
     <div className="flex">
@@ -33,7 +43,12 @@ const Dashboard = () => {
               <div key={task._id} className="bg-white rounded shadow p-4 border-l-4 border-green-500">
                 <div className="flex justify-between items-center">
                   <div className="font-semibold">{task.title}</div>
-                  <div className="text-sm text-gray-400">Due: {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "-"}</div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-sm text-gray-400">Completed</div>
+                    <button onClick={() => handleDelete(task._id)} className="text-red-500 hover:text-red-700" title="Delete Task">
+                      <FaTrash />
+                    </button>
+                  </div>
                 </div>
                 <div className="text-gray-600 mt-2">{task.description}</div>
                 <div className="mt-2 text-xs text-gray-500">Priority: {task.priority}</div>
