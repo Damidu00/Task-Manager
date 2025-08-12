@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from "cors";
 import dotenv from "dotenv"
 import taskRouter from './routes/taskRoutes.js';
 
@@ -15,7 +16,7 @@ const connection = mongoose.connection;
 connection.once("open",() => {
     console.log("Database Connected!!");
 })
-
+app.use(cors());
 app.use(bodyParser.json())
 app.use("/api/task",taskRouter)
 
