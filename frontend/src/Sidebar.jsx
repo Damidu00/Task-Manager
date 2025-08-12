@@ -19,7 +19,7 @@ const Sidebar = () => {
           to="/tasks"
           className={`py-2 px-3 rounded transition-colors ${isActive("/tasks") ? "bg-gray-700" : "hover:bg-gray-700"}`}
         >
-          Tasks
+          Completed tasks
         </Link>
       </nav>
     </div>
