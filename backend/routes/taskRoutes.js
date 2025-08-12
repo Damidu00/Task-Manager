@@ -9,7 +9,8 @@ const taskValidation = [
 	body("title").notEmpty().withMessage("Title is required"),
 	body("description").optional().isString(),
 	body("status").optional().isIn(["pending", "in progress", "completed"]),
-	body("dueDate").optional().isISO8601().toDate()
+	body("dueDate").optional().isISO8601().toDate(),
+	body("priority").optional().isIn(["High", "Medium", "Low"])
 ];
 
 taskRouter.post("/add", taskValidation, addTask); // Route to add a new task

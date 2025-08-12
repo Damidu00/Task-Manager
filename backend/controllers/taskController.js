@@ -8,12 +8,13 @@ export const addTask = async (req, res) => {
 	   return res.status(400).json({ errors: errors.array() });
    }
    try {
-	   const { title, description, status, dueDate } = req.body;
+	   const { title, description, status, dueDate, priority } = req.body;
 	   const newTask = new Task({
 		   title,
 		   description,
 		   status,
-		   dueDate
+		   dueDate,
+		   priority
 	   });
 	   const savedTask = await newTask.save();
 	   res.status(201).json(savedTask);
@@ -55,9 +56,16 @@ export const updateTask = async (req, res) => {
    }
    try {
 	   const { id } = req.params;
+	   const { title, description, status, dueDate, priority } = req.body;
+	   const updateFields = {};
+	   if (title !== undefined) updateFields.title = title;
+	   if (description !== undefined) updateFields.description = description;
+	   if (status !== undefined) updateFields.status = status;
+	   if (dueDate !== undefined) updateFields.dueDate = dueDate;
+	   if (priority !== undefined) updateFields.priority = priority;
 	   const updatedTask = await Task.findByIdAndUpdate(
 		   id,
-		   req.body,
+		   updateFields,
 		   { new: true, runValidators: true }
 	   );
 	   if (!updatedTask) {
