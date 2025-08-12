@@ -28,11 +28,11 @@ const Tasks = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex ml-52 flex-col md:flex-row min-h-screen">
       <Sidebar />
-      <div className="p-6 max-w-3xl mx-auto ml-52 w-full">
-        <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-        <h2 className="text-lg font-semibold mb-2">Completed Tasks</h2>
+      <div className="p-4 sm:p-6 max-w-3xl mx-auto md:ml-52 w-full">
+        {/* <h1 className="text-2xl font-bold mb-4">Tasks</h1> */}
+        <h2 className="text-lg font-semibold mb-2 text-2xl">Completed Tasks</h2>
         {loading ? (
           <div>Loading...</div>
         ) : tasks.length === 0 ? (
@@ -40,17 +40,17 @@ const Tasks = () => {
         ) : (
           <div className="grid gap-4">
             {tasks.map(task => (
-              <div key={task._id} className="bg-white rounded shadow p-4 border-l-4 border-green-500">
-                <div className="flex justify-between items-center">
-                  <div className="font-semibold">{task.title}</div>
+              <div key={task._id} className="bg-white rounded shadow p-3 sm:p-4 border-l-4 border-green-500">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                  <div className="font-semibold text-base sm:text-lg">{task.title}</div>
                   <div className="flex items-center gap-2">
-                    <div className="text-sm text-gray-400">Completed</div>
+                    <div className="text-xs sm:text-sm text-gray-400">Completed</div>
                     <button onClick={() => handleDelete(task._id)} className="text-red-500 hover:text-red-700" title="Delete Task">
                       <FaTrash />
                     </button>
                   </div>
                 </div>
-                <div className="text-gray-600 mt-2">{task.description}</div>
+                <div className="text-gray-600 mt-2 text-sm">{task.description}</div>
                 <div className="mt-2 text-xs text-gray-500">Priority: {task.priority}</div>
               </div>
             ))}
