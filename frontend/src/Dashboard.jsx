@@ -11,7 +11,7 @@ const Dashboard = () => {
     axios.get("http://localhost:5000/api/task/")
       .then(res => {
         // Filter only completed tasks
-        setTasks(res.data.filter(task => task.status === "Completed"));
+        setTasks(res.data.filter(task => task.status === "completed"));
         setLoading(false);
       })
       .catch(() => setLoading(false));
